@@ -29,7 +29,6 @@ mola_add_library(
 	PUBLIC_LINK_LIBRARIES
 		mrpt::obs
 	PRIVATE_LINK_LIBRARIES
-		gtsam
 		mrpt::gui   #TODO: remove after mapviz!
 		mrpt::maps  #TODO: remove after mapviz!
 )
