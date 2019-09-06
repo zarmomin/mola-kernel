@@ -103,32 +103,32 @@ std::string mola::parseYaml(const std::string& text)
     return s;
 }
 
-inline void ensureYamlEntryExists(const YAML::Node& n, const std::string& name)
+inline void mola::ensureYamlEntryExists(const YAML::Node& n, const std::string& name)
 {
-  ASSERTMSG_(n[name], "Missing YAML required entry: `" _name "`");
+  ASSERTMSG_(n[name], "Missing YAML required entry: `" name "`");
 }
 
 template <typename T>
-inline void yamlLoadMemberOpt(const YAML::Node& cfg, const std::string& varname, T& out_var)
+inline void mola::yamlLoadMemberOpt(const YAML::Node& cfg, const std::string& varname, T& out_var)
 {
   out_var = cfg[varname].as<T>();
 }
 
 template <typename T>
-inline void yamlLoadMemberReq(const YAML::Node& cfg, const std::string& varname, T& out_var)
+inline void mola::yamlLoadMemberReq(const YAML::Node& cfg, const std::string& varname, T& out_var)
 {
   ensureYamlEntryExists(cfg, varname);
   out_var = cfg[varname].as<T>();
 }
 
 template <typename T>
-inline void yamlLoadMemberOptDeg(const YAML::Node& cfg, const std::string& varname, T& out_var)
+inline void mola::yamlLoadMemberOptDeg(const YAML::Node& cfg, const std::string& varname, T& out_var)
 {
   out_var = mrpt::DEG2RAD(cfg[varname].as<T>());
 }
 
 template <typename T>
-inline void yamlLoadMemberReqDeg(const YAML::Node& cfg, const std::string& varname, T& out_var)
+inline void mola::yamlLoadMemberReqDeg(const YAML::Node& cfg, const std::string& varname, T& out_var)
 {
   ensureYamlEntryExists(cfg, varname);
   out_var = mrpt::DEG2RAD(cfg[varname].as<T>());
