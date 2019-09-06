@@ -56,7 +56,7 @@ void RawDataSourceBase::initialize_common(const std::string& cfg_block)
     {
         for (auto sensor : ds_preview)
         {
-            ENSURE_YAML_ENTRY_EXISTS(sensor, "raw_sensor_label");
+            ensureYamlEntryExists(sensor, "raw_sensor_label");
             const auto label   = sensor["raw_sensor_label"].as<std::string>();
             const auto decim   = sensor["decimation"].as<unsigned int>(1);
             const auto win_pos = sensor["win_pos"].as<std::string>("");

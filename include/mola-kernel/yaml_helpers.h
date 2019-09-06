@@ -13,7 +13,8 @@
 
 #include <sstream>
 #include <string>
-#include "macro_helpers.h"
+
+#include <yaml-cpp/yaml.h>
 
 namespace mola
 {
@@ -33,53 +34,18 @@ inline std::string yaml2string(const YAML_CLASS& cfg)
     return ss.str();
 }
 
-#define ENSURE_YAML_ENTRY_EXISTS(_c, _name) \
-    ASSERTMSG_(_c[_name], "Missing YAML required entry: `" _name "`")
+inline void ensureYamlEntryExists(const YAML::Node& n, const std::string& name);
 
-/** Loads (optional) variable named "_varname" from the YAML config named `cfg`
- * into the variable `_param_str._varname` */
-#define YAML_LOAD_OPT3(_param_str, _varname, _type) \
-    _param_str._varname = cfg[#_varname].as<_type>(_param_str._varname)
+template <typename T>
+inline void yamlLoadMemberOpt(const YAML::Node& cfg, const std::string& varname, T& out_var);
 
-#define YAML_LOAD_OPT2(_varname, _type) \
-    _varname = cfg[#_varname].as<_type>(_varname)
+template <typename T>
+inline void yamlLoadMemberReq(const YAML::Node& cfg, const std::string& varname, T& out_var);
 
-/** Use `YAML_LOAD_MEMBER_OPT(foo,double);` to load YAML var `foo` into `foo_`
- */
-#define YAML_LOAD_MEMBER_OPT(_varname, _type) \
-    _varname##_ = cfg[#_varname].as<_type>(_varname##_)
+template <typename T>
+inline void yamlLoadMemberOptDeg(const YAML::Node& cfg, const std::string& varname, T& out_var);
 
-/** Loads (required) variable named "_varname" from the YAML config named `cfg`
- * into the variable `_param_str._varname` */
-#define YAML_LOAD_REQ3(_param_str, _varname, _type) \
-    ENSURE_YAML_ENTRY_EXISTS(cfg, #_varname);       \
-    YAML_LOAD_OPT3(_param_str, _varname, _type)
-
-#define YAML_LOAD_REQ2(_varname, _type)       \
-    ENSURE_YAML_ENTRY_EXISTS(cfg, #_varname); \
-    YAML_LOAD_OPT2(_varname, _type)
-
-/** Use `YAML_LOAD_MEMBER_REQ(foo,double);` to load YAML var `foo` into `foo_`
- */
-#define YAML_LOAD_MEMBER_REQ(_varname, _type) \
-    ENSURE_YAML_ENTRY_EXISTS(cfg, #_varname); \
-    YAML_LOAD_MEMBER_OPT(_varname, _type)
-
-/** like YAML_LOAD_OPT, values in the YAML file in "degrees" stored in rads */
-#define YAML_LOAD_OPT_DEG3(_param_str, _varname, _type)       \
-    _param_str._varname = mrpt::RAD2DEG(_param_str._varname); \
-    YAML_LOAD_OPT3(_param_str, _varname, _type);              \
-    _param_str._varname = mrpt::DEG2RAD(_param_str._varname)
-
-/** like YAML_LOAD_REQ, values in the YAML file in "degrees" stored in rads */
-#define YAML_LOAD_REQ_DEG3(_param_str, _varname, _type)       \
-    _param_str._varname = mrpt::RAD2DEG(_param_str._varname); \
-    YAML_LOAD_REQ(_param_str, _varname, _type);               \
-    _param_str._varname = mrpt::DEG2RAD(_param_str._varname)
-
-#define YAML_LOAD_OPT(...) VFUNC(YAML_LOAD_OPT, __VA_ARGS__)
-#define YAML_LOAD_REQ(...) VFUNC(YAML_LOAD_REQ, __VA_ARGS__)
-#define YAML_LOAD_OPT_DEG(...) VFUNC(YAML_LOAD_OPT_DEG, __VA_ARGS__)
-#define YAML_LOAD_REQ_DEG(...) VFUNC(YAML_LOAD_REQ_DEG, __VA_ARGS__)
+template <typename T>
+inline void yamlLoadMemberReqDeg(const YAML::Node& cfg, const std::string& varname, T& out_var);
 
 }  // namespace mola

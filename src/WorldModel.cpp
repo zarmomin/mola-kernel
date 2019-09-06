@@ -237,7 +237,7 @@ void WorldModel::initialize(const std::string& cfg_block)
     auto cfg = c["params"];
     MRPT_LOG_DEBUG_STREAM("Loading these params:\n" << cfg);
 
-    YAML_LOAD_OPT(params_, age_to_unload_keyframes, double);
+    yamlLoadMemberOpt<double>(cfg, "age_to_unload_keyframes", params_.age_to_unload_keyframes);
 
     // Create map container:
     MRPT_TODO("Switch between container type per cfg");
