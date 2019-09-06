@@ -11,8 +11,6 @@
  */
 
 #include <mola-kernel/yaml_helpers.h>
-#include <mrpt/core/exceptions.h>
-#include <mrpt/core/bits_math.h>
 #include <mrpt/system/os.h>
 #include <mrpt/system/string_utils.h>
 #include <algorithm>
@@ -102,35 +100,4 @@ std::string mola::parseYaml(const std::string& text)
     s = parseEnvVars(s);
 
     return s;
-}
-
-void mola::ensureYamlEntryExists(const YAML::Node& n, const std::string& name)
-{
-  ASSERTMSG_(n[name], "Missing YAML required entry: " + name);
-}
-
-template <typename T>
-void mola::yamlLoadMemberOpt(const YAML::Node& cfg, const std::string& varname, T* out_var)
-{
-  *out_var = cfg[varname].as<T>();
-}
-
-template <typename T>
-void mola::yamlLoadMemberReq(const YAML::Node& cfg, const std::string& varname, T* out_var)
-{
-  ensureYamlEntryExists(cfg, varname);
-  *out_var = cfg[varname].as<T>();
-}
-
-template <typename T>
-void mola::yamlLoadMemberOptDeg(const YAML::Node& cfg, const std::string& varname, T* out_var)
-{
-  *out_var = mrpt::DEG2RAD(cfg[varname].as<T>());
-}
-
-template <typename T>
-void mola::yamlLoadMemberReqDeg(const YAML::Node& cfg, const std::string& varname, T* out_var)
-{
-  ensureYamlEntryExists(cfg, varname);
-  *out_var = mrpt::DEG2RAD(cfg[varname].as<T>());
 }
