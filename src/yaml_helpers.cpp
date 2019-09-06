@@ -110,27 +110,27 @@ void mola::ensureYamlEntryExists(const YAML::Node& n, const std::string& name)
 }
 
 template <typename T>
-void mola::yamlLoadMemberOpt(const YAML::Node& cfg, const std::string& varname, T& out_var)
+void mola::yamlLoadMemberOpt(const YAML::Node& cfg, const std::string& varname, T* out_var)
 {
-  out_var = cfg[varname].as<T>();
+  *out_var = cfg[varname].as<T>();
 }
 
 template <typename T>
-void mola::yamlLoadMemberReq(const YAML::Node& cfg, const std::string& varname, T& out_var)
+void mola::yamlLoadMemberReq(const YAML::Node& cfg, const std::string& varname, T* out_var)
 {
   ensureYamlEntryExists(cfg, varname);
-  out_var = cfg[varname].as<T>();
+  *out_var = cfg[varname].as<T>();
 }
 
 template <typename T>
-void mola::yamlLoadMemberOptDeg(const YAML::Node& cfg, const std::string& varname, T& out_var)
+void mola::yamlLoadMemberOptDeg(const YAML::Node& cfg, const std::string& varname, T* out_var)
 {
-  out_var = mrpt::DEG2RAD(cfg[varname].as<T>());
+  *out_var = mrpt::DEG2RAD(cfg[varname].as<T>());
 }
 
 template <typename T>
-void mola::yamlLoadMemberReqDeg(const YAML::Node& cfg, const std::string& varname, T& out_var)
+void mola::yamlLoadMemberReqDeg(const YAML::Node& cfg, const std::string& varname, T* out_var)
 {
   ensureYamlEntryExists(cfg, varname);
-  out_var = mrpt::DEG2RAD(cfg[varname].as<T>());
+  *out_var = mrpt::DEG2RAD(cfg[varname].as<T>());
 }

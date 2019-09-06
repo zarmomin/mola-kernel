@@ -37,15 +37,15 @@ inline std::string yaml2string(const YAML_CLASS& cfg)
 void ensureYamlEntryExists(const YAML::Node& n, const std::string& name);
 
 template <typename T>
-void yamlLoadMemberOpt(const YAML::Node& cfg, const std::string& varname, T& out_var);
+void yamlLoadMemberOpt(const YAML::Node& cfg, const std::string& varname, T* out_var);
 
 template <typename T>
-void yamlLoadMemberReq(const YAML::Node& cfg, const std::string& varname, T& out_var);
+void yamlLoadMemberReq(const YAML::Node& cfg, const std::string& varname, T* out_var);
 
 template <typename T>
-void yamlLoadMemberOptDeg(const YAML::Node& cfg, const std::string& varname, T& out_var);
+void yamlLoadMemberOptDeg(const YAML::Node& cfg, const std::string& varname, T* out_var);
 
 template <typename T>
-void yamlLoadMemberReqDeg(const YAML::Node& cfg, const std::string& varname, T& out_var);
+void yamlLoadMemberReqDeg(const YAML::Node& cfg, const std::string& varname, T* out_var);
 
 }  // namespace mola
